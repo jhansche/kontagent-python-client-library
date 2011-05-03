@@ -11,6 +11,15 @@ from urlparse import urlparse, urlunparse
 DIRECTED_VAL = 'd'
 UNDIRECTED_VAL = 'u'
 
+# Valid `type` arguments to `stream_post()`
+CHANNEL_FEED_PUBLISH = 'feedpub'
+CHANNEL_STREAM = 'stream'
+CHANNEL_FEED_STORY = 'feedstory'
+CHANNEL_MULTI_FEED_STORY = 'multifeedstory'
+CHANNEL_DASHBOARD_ACTIVITY = 'dashboard_activity'
+CHANNEL_DASHBOARD_GLOBAL_NEWS = 'dashboard_globalnews'
+
+
 class AnalyticsQuery:
     """ Class representing a single query to the Kontagent Analytics API. """
     def __init__(self, query_string, api_server, query_type=None):
@@ -122,6 +131,16 @@ class AnalyticsInterface:
         params = dict((k, v) for k, v in params.iteritems() if v is not None)
 
         return self.construct_query("pgr", params)
+
+    def stream_post(self, uid, type, trackingTag, subtype_1=None,
+                    subtype_2=None, subtype_3=None):
+        """Generates a Stream Post (pst) Analytics REST API call."""
+
+        params = {"s":uid, "tu":type, "u":trackingTag,
+                  "st1":subtype_1, "st2":subtype_2, "st3":subtype_3}
+        params = dict((k, v) for k, v in params.iteritems() if v is not None)
+
+        return self.construct_query("pst", params)
 
     def invite_sent(self, uid, recipients, tracking_tag=None, 
                     template_id=None, subtype_1=None, subtype_2=None,
