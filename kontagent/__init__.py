@@ -269,7 +269,7 @@ def generate_long_tag():
     Returns a 16 character tracking tag.
 
     """
-    return "%X" % random.getrandbits(64)
+    return "%016X" % random.getrandbits(64)
 
 
 def generate_short_tag():
@@ -278,7 +278,7 @@ def generate_short_tag():
     Returns an 8 character tracking tag.
 
     """
-    return "%X" % random.getrandbits(32)
+    return "%08X" % random.getrandbits(32)
 
 
 def append_params(url, params):
